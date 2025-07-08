@@ -1,12 +1,12 @@
-# Wiedza Skautingowa
+# Scouting Knowledge
 
-Projekt strony internetowej zbierającej wiedzę i materiały potrzebne do zdobywania sprawności i specjalizacji skautowych.
+A website project collecting knowledge and materials needed to earn scouting skills and specializations.
 
-## Cel projektu
+## Project Goal
 
-Stworzenie centralnego, łatwo dostępnego miejsca, w którym skauci i skautki mogą znaleźć informacje, poradniki i wymagania dotyczące różnych dziedzin rzemiosła skautowego.
+To create a central, easily accessible place where scouts can find information, guides, and requirements for various areas of scouting craft.
 
-## Użyte technologie
+## Technologies Used
 
 *   [Next.js](https://nextjs.org/)
 *   [TypeScript](https://www.typescriptlang.org/)
