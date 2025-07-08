@@ -1,4 +1,4 @@
-# Scouting Knowledge
+# Scouts Knowledge
 
 A website project collecting knowledge and materials needed to earn scouting skills and specializations.
 
