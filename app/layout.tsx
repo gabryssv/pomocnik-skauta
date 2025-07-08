@@ -4,9 +4,12 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Skauci Europy - Funkcje i Umiejętności",
+  title: "Pomocnik Skauta - Funkcje i Umiejętności",
   description: "Przewodnik po funkcjach w zastępie harcerskim i wymaganych umiejętnościach",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+  icons: {
+    icon: '/croix-agse.png',
+  },
 }
 
 export default function RootLayout({

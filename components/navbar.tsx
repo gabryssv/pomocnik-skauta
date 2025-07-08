@@ -21,8 +21,8 @@ export default function Navbar() {
         <nav className="flex items-center justify-between p-3 text-white bg-black/30 backdrop-blur-lg rounded-full border border-white/10 shadow-lg">
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-2 ml-1.5" onClick={() => setIsMenuOpen(false)}>
-              <img src="https://uigse-fse.org/wp-content/uploads/2019/10/croix-agse.png" alt="Logo Skautów Europy" className="h-7 w-7" />
-              <span className="text-lg font-medium hidden sm:inline-block">Skauci Europy</span>
+              <img src="/croix-agse.png" alt="Logo Skautów Europy" className="h-7 w-7" />
+              <span className="text-lg font-medium hidden sm:inline-block">Pomocnik Skauta</span>
             </Link>
           </div>
 

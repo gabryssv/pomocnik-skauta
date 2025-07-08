@@ -87,9 +87,9 @@ export default function HomePage() {
       <div className="flex h-screen items-center justify-center text-center">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center gap-4 mb-4">
-            <img src="https://uigse-fse.org/wp-content/uploads/2019/10/croix-agse.png" alt="Logo Skautów Europy" className="h-12 w-12" />
+            <img src="/croix-agse.png" alt="Logo Skautów Europy" className="h-12 w-12" />
             <h1 className="text-4xl font-bold text-white">
-              Skauci Europy
+              Pomocnik Skauta
             </h1>
           </div>
           <p className="text-xl text-neutral-400 max-w-2xl mx-auto mb-8">
