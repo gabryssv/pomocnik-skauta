@@ -26,7 +26,7 @@ function renderContentWithLinks(content: string) {
 
 async function getMessage(id: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://beta-pomocnik-skauta.vercel.app'}/api/messages`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'https://beta-pomocnik-skauta.vercel.app'}/api/messages`);
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
