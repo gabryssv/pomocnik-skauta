@@ -47,14 +47,14 @@ export default function KucharzPage() {
 		<div className="min-h-screen bg-black">
 			<div className="container mx-auto px-4 py-8">
 				<div className="mb-8">
-					<Link href="/">
+					<Link href="/" data-aos="fade-right">
 						<Button className="mb-4 rounded-full bg-neutral-900 px-4 py-1.5 text-sm font-medium text-neutral-400 transition-colors duration-300 hover:bg-neutral-800">
 							<ArrowLeft className="mr-2 h-4 w-4" />
 							Powrót do wyboru funkcji
 						</Button>
 					</Link>
 
-					<div className="mb-4 flex items-center gap-4">
+					<div className="mb-4 flex items-center gap-4" data-aos="fade-left">
 						<div className="rounded-lg text-red-500 border border-red-500/20 bg-red-500/10 p-3">
 							<ChefHat className="h-8 w-8" />
 						</div>
@@ -66,14 +66,14 @@ export default function KucharzPage() {
 						</div>
 					</div>
 
-					<Badge className="border-neutral-700 bg-neutral-900 text-neutral-300" variant="secondary">
+					<Badge className="border-neutral-700 bg-neutral-900 text-neutral-300" variant="secondary" data-aos="fade-in" data-aos-delay="100">
 						12 umiejętności do opanowania
 					</Badge>
 				</div>
 
 				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 					{/* Left Column - Selected Category Preview */}
-					<div className="space-y-4">
+					<div className="space-y-4" data-aos="fade-up">
 						<Card className="border-neutral-800 bg-neutral-950 transition-colors duration-300 hover:bg-neutral-900">
 							<CardHeader className="px-7 py-7">
 								<div className="flex items-center justify-between">
@@ -106,7 +106,7 @@ export default function KucharzPage() {
 					</div>
 
 					{/* Right Column - All Categories */}
-					<div className="flex h-full w-full flex-col gap-4">
+					<div className="flex h-full w-full flex-col gap-4" data-aos="fade-up" data-aos-delay="100">
 						{skills.map((skillGroup, index) => (
 							<Card
 								key={index}
@@ -135,7 +135,7 @@ export default function KucharzPage() {
 					</div>
 				</div>
 
-				<div className="mt-12 text-center">
+				<div className="mt-12 text-center" data-aos="fade-up" data-aos-delay="200">
 					<Card className="mx-auto max-w-2xl border-neutral-800 bg-neutral-950">
 						<CardContent className="pt-6">
 							<p className="mb-4 text-neutral-400">

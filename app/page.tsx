@@ -82,24 +82,25 @@ const functions = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-black pb-12 select-none">
+    <div className="min-h-screen bg-black select-none flex flex-col">
       <Navbar />
+      <main className="flex-grow flex flex-col gap-[48px]">
       <div className="flex h-screen items-center justify-center text-center">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4" data-aos="fade-up">
           <div className="flex items-center justify-center gap-4 mb-4">
-            <img src="/croix-agse.png" alt="Logo Skautów Europy" className="h-12 w-12" />
+            <img draggable="false" src="/croix-agse.png" alt="Logo Skautów Europy" className="h-12 w-12 hidden md:block" />
             <h1 className="text-4xl font-bold text-white">
               Pomocnik Skauta
             </h1>
           </div>
-          <p className="text-xl text-neutral-400 max-w-2xl mx-auto mb-8">
+          <p className="text-xl text-neutral-400 max-w-2xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="100">
             Wybierz funkcję, aby poznać wymagania i umiejętności potrzebne do jej pełnienia w zastępie
           </p>
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
+          <div className="flex flex-wrap justify-center gap-4 mb-8" data-aos="fade-up" data-aos-delay="200">
             {functions.map((func) => {
               const IconComponent = func.icon
               return (
-                <Link key={func.id} href={`/${func.id}`}>
+                <Link draggable="false" key={func.id} href={`/${func.id}`}>
                   <Button variant="outline" className={`${func.colorBackground} ${func.colorBorder} hover:bg-neutral-800 text-white rounded-full text-sm font-medium px-4 py-1.5 h-auto`}>
                     <IconComponent className={`h-5 w-5 mr-2 ${func.colorText}`} />
                     {func.name}
@@ -112,11 +113,11 @@ export default function HomePage() {
       </div>
 
       {/* Second section (Cards) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch px-4">
-        {functions.map((func) => {
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch px-4 lg:max-w-6xl lg:mx-auto">
+        {functions.map((func, index) => {
           const IconComponent = func.icon
           return (
-            <Link key={func.id} href={`/${func.id}`} className="h-full">
+            <Link draggable="false" key={func.id} href={`/${func.id}`} className="h-full" data-aos="fade-up" data-aos-delay={index * 100}>
               <Card className="bg-neutral-950 border-neutral-800 hover:bg-neutral-900 transition-all duration-300 hover:scale-[1.02] cursor-pointer group h-full flex flex-col">
                 <CardHeader className="pb-4 flex-grow">
                   <div className="flex items-center justify-between mb-2">
@@ -140,11 +141,12 @@ export default function HomePage() {
           )
         })}
       </div>
+      
+      <footer className="text-center text-neutral-500 text-sm pb-12 px-4">
+      Wykonanie: <ExternalLink draggable="false" href="https://gabryssv.tech">Gabriel Kossakowski</ExternalLink> - Zastępowy Zastępu WILK - <ExternalLink draggable="false" href="https://www.facebook.com/1grybowskafse">1. DG</ExternalLink>
+      </footer>
+      </main>
 
-      {/* Footer */}
-      <div className="text-center mt-16">
-        <p className="text-neutral-500 text-sm">Wykonanie: <ExternalLink href="https://gabryssv.tech">Gabriel Kossakowski</ExternalLink> - Zastępowy Zastępu WILK - <ExternalLink href="https://www.facebook.com/1grybowskafse">1. DG</ExternalLink></p>
       </div>
-    </div>
   )
 }
