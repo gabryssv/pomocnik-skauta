@@ -54,14 +54,14 @@ export default function PionierPage() {
     <div className="min-h-screen bg-black">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <Link href="/">
+          <Link href="/" data-aos="fade-right">
             <Button variant="ghost" className="text-neutral-400 hover:text-white hover:bg-neutral-900 mb-4 rounded-full text-sm font-medium px-4 py-1.5 h-auto">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Powrót do wyboru funkcji
             </Button>
           </Link>
 
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-4 mb-4" data-aos="fade-left">
             <div className="p-3 rounded-lg bg-orange-500/10 text-orange-500 border border-orange-500/20">
               <Hammer className="h-8 w-8" />
             </div>
@@ -71,14 +71,14 @@ export default function PionierPage() {
             </div>
           </div>
 
-          <Badge variant="secondary" className="text-neutral-300 border-neutral-700 bg-neutral-900">
+          <Badge variant="secondary" className="text-neutral-300 border-neutral-700 bg-neutral-900" data-aos="fade-in" data-aos-delay="100">
             17 umiejętności do opanowania
           </Badge>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full items-start">
           {/* Left Column - Selected Category Preview */}
-          <div className="space-y-4">
+          <div className="space-y-4" data-aos="fade-up">
             <Card
               className="bg-neutral-950 border-neutral-800 hover:bg-neutral-900 transition-colors duration-300"
             >
@@ -108,11 +108,12 @@ export default function PionierPage() {
           {/* Right Column - All Categories */}
           <div
             className="flex flex-col gap-4 w-full h-full"
+            data-aos="fade-up" data-aos-delay="100"
           >
             {skills.map((skillGroup, index) => (
               <Card
                 key={index}
-                className={`bg-neutral-950 border-neutral-800 hover:bg-neutral-900 transition-colors duration-300 ${
+                className={`bg-neutral-950 border-neutral-800 transition-colors duration-300 hover:bg-neutral-900 ${
                   index === selectedSection ? "ring-2 ring-orange-500/50" : ""
                 }`}
               >
@@ -135,7 +136,7 @@ export default function PionierPage() {
           </div>
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-12 text-center" data-aos="fade-up" data-aos-delay="200">
           <Card className="bg-neutral-950 border-neutral-800 max-w-2xl mx-auto">
             <CardContent className="pt-6">
               <p className="text-neutral-400 mb-4">

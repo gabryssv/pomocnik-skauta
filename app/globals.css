@@ -40,3 +40,22 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000; /* Dark background for the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626; /* Darker thumb color */
+  border-radius: 9999px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f3f; /* Lighter thumb on hover */
+}
