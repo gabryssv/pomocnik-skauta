@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Hammer, Radio, Compass, Theater, ChefHat, Heart, ArrowRight   } from "lucide-react" 
+import { Hammer, Radio, Compass, Theater, ChefHat, Heart, ArrowRight } from "lucide-react"
 import { ExternalLink } from "@/components/external-link"
 import { LatinCross } from "@/components/icons/latin-cross"
 

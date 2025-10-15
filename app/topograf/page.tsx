@@ -100,9 +100,8 @@ export default function TopografPage() {
             {skills.map((skillGroup, index) => (
               <Card
                 key={index}
-                className={`bg-neutral-950 border-neutral-800 hover:bg-neutral-900 transition-colors duration-300 ${
-                  index === selectedSection ? "ring-2 ring-green-500/50" : ""
-                }`}
+                className={`bg-neutral-950 border-neutral-800 hover:bg-neutral-900 transition-colors duration-300 ${index === selectedSection ? "ring-2 ring-green-500/50" : ""
+                  }`}
               >
                 <CardHeader
                   className="cursor-pointer px-7 py-7 h-full flex items-center justify-center"
