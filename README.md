@@ -1,6 +1,6 @@
 # Scouts Knowledge
 
-A website project collecting knowledge and materials needed to earn scouting skills and specializations.
+A website project gathering knowledge and materials needed to acquire valuable scouting skills and specializations.
 
 ## Project Goal
 
