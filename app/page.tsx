@@ -3,84 +3,16 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Hammer, Radio, Compass, Theater, ChefHat, Heart, ArrowRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { ExternalLink } from "@/components/external-link"
-import { LatinCross } from "@/components/icons/latin-cross"
+import { getAllFunctions, countSkills } from "@/lib/functions"
+import { getIconComponent } from "@/lib/icons"
 
-const functions = [
-  {
-    id: "pionier",
-    name: "Pionier",
-    description: "Umiejętności budowlane, węzły, ogniska i praca z narzędziami",
-    icon: Hammer,
-    colorBackground: "bg-orange-500/10",
-    colorText: "text-orange-500",
-    colorBorder: "border-orange-500/20",
-    skillCount: 17,
-  },
-  {
-    id: "sygnalista",
-    name: "Sygnalista",
-    description: "Komunikacja, szyfry, sygnalizacja i przekazywanie informacji",
-    icon: Radio,
-    colorBackground: "bg-blue-500/10",
-    colorText: "text-blue-500",
-    colorBorder: "border-blue-500/20",
-    skillCount: 11,
-  },
-  {
-    id: "topograf",
-    name: "Topograf",
-    description: "Orientacja w terenie, mapy, kompas i nawigacja",
-    icon: Compass,
-    colorBackground: "bg-green-500/10",
-    colorText: "text-green-500",
-    colorBorder: "border-green-500/20",
-    skillCount: 11,
-  },
-  {
-    id: "wodzirej",
-    name: "Wodzirej",
-    description: "Techniki ekspresyjne, prowadzenie ognisk i animacja",
-    icon: Theater,
-    colorBackground: "bg-purple-500/10",
-    colorText: "text-purple-500",
-    colorBorder: "border-purple-500/20",
-    skillCount: 8,
-  },
-  {
-    id: "kucharz",
-    name: "Kucharz",
-    description: "Gotowanie, dietetyka, kuchnia polowa i higiena żywności",
-    icon: ChefHat,
-    colorBackground: "bg-red-500/10",
-    colorText: "text-red-500",
-    colorBorder: "border-red-500/20",
-    skillCount: 12,
-  },
-  {
-    id: "sanitariusz",
-    name: "Sanitariusz",
-    description: "Pierwsza pomoc, bezpieczeństwo i opieka zdrowotna",
-    icon: Heart,
-    colorBackground: "bg-pink-500/10",
-    colorText: "text-pink-500",
-    colorBorder: "border-pink-500/20",
-    skillCount: 16,
-  },
-  {
-    id: "liturgista",
-    name: "Liturgista",
-    description: "Służba liturgiczna, symbole religijne i duchowość",
-    icon: LatinCross,
-    colorBackground: "bg-yellow-500/10",
-    colorText: "text-yellow-500",
-    colorBorder: "border-yellow-500/20",
-    skillCount: 5,
-  },
-]
+export const dynamic = "force-dynamic"
 
-export default function HomePage() {
+export default async function HomePage() {
+  const functions = await getAllFunctions()
+
   return (
     <div className="min-h-screen bg-black pb-12 select-none">
       <Navbar />
@@ -97,11 +29,14 @@ export default function HomePage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             {functions.map((func) => {
-              const IconComponent = func.icon
+              const IconComponent = getIconComponent(func.icon || undefined)
+              const colorBackground = func.color_background || "bg-neutral-700/10"
+              const colorText = func.color_text || "text-neutral-300"
+              const colorBorder = func.color_border || "border-neutral-700/20"
               return (
                 <Link key={func.id} href={`/${func.id}`}>
-                  <Button variant="outline" className={`${func.colorBackground} ${func.colorBorder} hover:bg-neutral-800 text-white rounded-full text-sm font-medium px-4 py-1.5 h-auto`}>
-                    <IconComponent className={`h-5 w-5 mr-2 ${func.colorText}`} />
+                  <Button variant="outline" className={`${colorBackground} ${colorBorder} hover:bg-neutral-800 text-white rounded-full text-sm font-medium px-4 py-1.5 h-auto`}>
+                    <IconComponent className={`h-5 w-5 mr-2 ${colorText}`} />
                     {func.name}
                   </Button>
                 </Link>
@@ -114,17 +49,21 @@ export default function HomePage() {
       {/* Second section (Cards) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch px-4">
         {functions.map((func) => {
-          const IconComponent = func.icon
+          const IconComponent = getIconComponent(func.icon || undefined)
+          const colorBackground = func.color_background || "bg-neutral-700/10"
+          const colorText = func.color_text || "text-neutral-300"
+          const colorBorder = func.color_border || "border-neutral-700/20"
+          const skillCount = countSkills(func.skills)
           return (
             <Link key={func.id} href={`/${func.id}`} className="h-full">
               <Card className="bg-neutral-950 border-neutral-800 hover:bg-neutral-900 transition-all duration-300 hover:scale-[1.02] cursor-pointer group h-full flex flex-col">
                 <CardHeader className="pb-4 flex-grow">
                   <div className="flex items-center justify-between mb-2">
-                    <div className={`p-3 rounded-2xl ${func.colorBackground}`}>
-                      <IconComponent className={`h-6 w-6 ${func.colorText}`} />
+                    <div className={`p-3 rounded-2xl ${colorBackground}`}>
+                      <IconComponent className={`h-6 w-6 ${colorText}`} />
                     </div>
                     <Badge variant="secondary" className="text-neutral-300 bg-neutral-900 border-neutral-800">
-                      {func.skillCount} umiejętności
+                      {skillCount} umiejętności
                     </Badge>
                   </div>
                   <CardTitle className="text-xl text-white">{func.name}</CardTitle>
