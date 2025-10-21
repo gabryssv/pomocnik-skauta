@@ -5,8 +5,11 @@ import { ArrowLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { getFunctionById, countSkills } from "@/lib/functions"
-import { getIconComponent } from "@/lib/icons"
+import { getFunctionById, countSkills } from "../../lib/functions"
+import { getIconComponent } from "../../lib/icons"
+import type { SkillCategory } from "../../lib/functions"
+
+export const dynamic = "force-dynamic"
 
 export default async function FunctionPage({ params }: { params: { functionId: string } }) {
     const func = await getFunctionById(params.functionId)
@@ -63,7 +66,7 @@ export default async function FunctionPage({ params }: { params: { functionId: s
                                 </CardHeader>
                                 <CardContent className="pt-0 pl-7 pr-7 flex-1">
                                     <div className="space-y-3 pl-0">
-                                        {(func.skills[0].items || []).map((skill, idx) => (
+                                        {(func.skills[0].items || []).map((skill: string, idx: number) => (
                                             <div key={idx} className="flex items-center gap-3 text-neutral-300 py-1.5">
                                                 <div className={`w-2 h-2 rounded-full ${colorText} flex-shrink-0`} />
                                                 <span>{skill}</span>
@@ -77,7 +80,7 @@ export default async function FunctionPage({ params }: { params: { functionId: s
 
                     {/* Right - list all categories */}
                     <div className="flex flex-col gap-4 w-full h-full">
-                        {(func.skills || []).map((group, index) => (
+                        {(func.skills || []).map((group: SkillCategory, index: number) => (
                             <Card key={index} className="bg-neutral-950 border-neutral-800 hover:bg-neutral-900 transition-colors duration-300">
                                 <CardHeader className="px-7 py-7 h-full flex items-center justify-center">
                                     <div className="flex items-center justify-between w-full">
@@ -93,7 +96,7 @@ export default async function FunctionPage({ params }: { params: { functionId: s
                                 {Array.isArray(group.items) && group.items.length > 0 && (
                                     <CardContent className="pt-0 pl-7 pr-7 pb-7">
                                         <div className="space-y-2">
-                                            {group.items.map((item, i) => (
+                                            {group.items.map((item: string, i: number) => (
                                                 <div key={i} className="flex items-center gap-3 text-neutral-300 py-1.5">
                                                     <div className={`w-2 h-2 rounded-full ${colorText} flex-shrink-0`} />
                                                     <span>{item}</span>

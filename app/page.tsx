@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight } from "lucide-react"
 import { ExternalLink } from "@/components/external-link"
-import { getAllFunctions, countSkills } from "@/lib/functions"
-import { getIconComponent } from "@/lib/icons"
+import { getAllFunctions, countSkills, type FunctionRecord } from "../lib/functions"
+import { getIconComponent } from "../lib/icons"
 
 export const dynamic = "force-dynamic"
 
 export default async function HomePage() {
-  const functions = await getAllFunctions()
+  const functions: FunctionRecord[] = await getAllFunctions()
 
   return (
     <div className="min-h-screen bg-black pb-12 select-none">
@@ -30,9 +30,9 @@ export default async function HomePage() {
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             {functions.map((func) => {
               const IconComponent = getIconComponent(func.icon || undefined)
-              const colorBackground = func.color_background || "bg-neutral-700/10"
+              const colorBackground = func.color_background || "bg-neutral-800"
               const colorText = func.color_text || "text-neutral-300"
-              const colorBorder = func.color_border || "border-neutral-700/20"
+              const colorBorder = func.color_border || "border-neutral-700"
               return (
                 <Link key={func.id} href={`/${func.id}`}>
                   <Button variant="outline" className={`${colorBackground} ${colorBorder} hover:bg-neutral-800 text-white rounded-full text-sm font-medium px-4 py-1.5 h-auto`}>
@@ -50,9 +50,8 @@ export default async function HomePage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch px-4">
         {functions.map((func) => {
           const IconComponent = getIconComponent(func.icon || undefined)
-          const colorBackground = func.color_background || "bg-neutral-700/10"
+          const colorBackground = func.color_background || "bg-neutral-800"
           const colorText = func.color_text || "text-neutral-300"
-          const colorBorder = func.color_border || "border-neutral-700/20"
           const skillCount = countSkills(func.skills)
           return (
             <Link key={func.id} href={`/${func.id}`} className="h-full">
