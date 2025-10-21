@@ -1,5 +1,3 @@
-import { db } from "./db"
-
 export type SkillCategory = {
     category: string
     items: string[]
@@ -21,58 +19,30 @@ export function countSkills(skills: SkillCategory[] | null | undefined): number 
     return skills.reduce((sum, cat) => sum + (Array.isArray(cat.items) ? cat.items.length : 0), 0)
 }
 
-function normalizeRow(row: any): FunctionRecord {
-    let skills: SkillCategory[] | null = null
-    try {
-        const raw = row.skills
-        if (raw == null) skills = null
-        else if (typeof raw === "string") skills = JSON.parse(raw)
-        else skills = raw
-    } catch {
-        skills = null
-    }
-    return {
-        id: row.id,
-        name: row.name,
-        description: row.description ?? null,
-        icon: row.icon ?? null,
-        color_background: row.color_background ?? null,
-        color_text: row.color_text ?? null,
-        color_border: row.color_border ?? null,
-        skills,
-    }
-}
-
+// Client-side functions that call API routes
 export async function getAllFunctions(): Promise<FunctionRecord[]> {
     try {
-        const { rows } = await db.query(
-            `SELECT id, name, description, icon, color_background, color_text, color_border, skills
-             FROM functions
-             ORDER BY COALESCE(sort_order, 9999), name`
-        )
-        return rows.map(normalizeRow)
-    } catch (e: any) {
-        if (e && e.code === '42P01') {
-            // relation "functions" does not exist – return empty until DB is initialized
+        const response = await fetch('/api/functions')
+        if (!response.ok) {
+            console.error('Failed to fetch functions')
             return []
         }
-        throw e
+        return await response.json()
+    } catch (error) {
+        console.error('Error fetching functions:', error)
+        return []
     }
 }
 
 export async function getFunctionById(id: string): Promise<FunctionRecord | null> {
     try {
-        const { rows } = await db.query(
-            `SELECT id, name, description, icon, color_background, color_text, color_border, skills
-             FROM functions WHERE id = $1 LIMIT 1`,
-            [id]
-        )
-        if (!rows[0]) return null
-        return normalizeRow(rows[0])
-    } catch (e: any) {
-        if (e && e.code === '42P01') {
+        const response = await fetch(`/api/functions/${id}`)
+        if (!response.ok) {
             return null
         }
-        throw e
+        return await response.json()
+    } catch (error) {
+        console.error('Error fetching function:', error)
+        return null
     }
 }

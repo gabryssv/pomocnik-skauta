@@ -1,3 +1,5 @@
+"use client"
+
 import Navbar from "@/components/navbar"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -5,13 +7,82 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight } from "lucide-react"
 import { ExternalLink } from "@/components/external-link"
+import { Progress } from "@/components/ui/progress-loading"
+import { useState, useEffect } from "react"
 import { getAllFunctions, countSkills, type FunctionRecord } from "../lib/functions"
 import { getIconComponent } from "../lib/icons"
 
-export const dynamic = "force-dynamic"
+export default function HomePage() {
+  const [functions, setFunctions] = useState<FunctionRecord[]>([])
+  const [loading, setLoading] = useState(true)
+  const [loadingProgress, setLoadingProgress] = useState(0)
 
-export default async function HomePage() {
-  const functions: FunctionRecord[] = await getAllFunctions()
+  useEffect(() => {
+    async function loadFunctions() {
+      try {
+        // Simulate realistic loading progress
+        const progressInterval = setInterval(() => {
+          setLoadingProgress(prev => {
+            if (prev >= 90) return prev
+            return prev + Math.random() * 15
+          })
+        }, 100)
+
+        const data = await getAllFunctions()
+
+        // Complete loading
+        setLoadingProgress(100)
+        setTimeout(() => {
+          setFunctions(data)
+          setLoading(false)
+          clearInterval(progressInterval)
+        }, 300)
+
+      } catch (error) {
+        console.error('Error loading functions:', error)
+        setLoading(false)
+      }
+    }
+    loadFunctions()
+  }, [])
+
+  // Handle scrolling to hash on page load
+  useEffect(() => {
+    if (!loading && window.location.hash === '#functions-section') {
+      setTimeout(() => {
+        const functionsSection = document.getElementById('functions-section')
+        if (functionsSection) {
+          const navbarHeight = 90 // Account for navbar height + padding
+          const elementPosition = functionsSection.offsetTop - navbarHeight
+          window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth'
+          })
+        }
+      }, 100)
+    }
+  }, [loading])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="max-w-md w-full px-4">
+          <div className="text-center mb-6">
+            <img src="/croix-agse.png" alt="Logo Skautów Europy" className="h-16 w-16 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-white mb-2">Pomocnik Skauta</h2>
+            <p className="text-neutral-400">Ładowanie funkcji...</p>
+          </div>
+          <Progress
+            value={loadingProgress}
+            color="success"
+            showValueLabel={true}
+            size="md"
+            className="max-w-md"
+          />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-black pb-12 select-none">
@@ -47,7 +118,7 @@ export default async function HomePage() {
       </div>
 
       {/* Second section (Cards) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch px-4">
+      <div id="functions-section" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch px-4">
         {functions.map((func) => {
           const IconComponent = getIconComponent(func.icon || undefined)
           const colorBackground = func.color_background || "bg-neutral-800"
