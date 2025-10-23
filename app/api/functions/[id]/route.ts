@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '../../../../lib/db'
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
+        // W Next.js 16 params jest Promise i musi być await-owany
+        const { id } = await params
+
         const { rows } = await db.query(
             `SELECT id, name, description, icon, color_background, color_text, color_border, skills
        FROM functions WHERE id = $1 LIMIT 1`,
-            [params.id]
+            [id]
         )
 
         if (!rows[0]) {

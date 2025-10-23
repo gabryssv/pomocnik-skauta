@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, ChevronRight } from "lucide-react"
+import { ArrowLeft, ChevronRight, ChevronLeft } from "lucide-react"
 import { useState, useEffect, use } from "react"
 
 import Navbar from "@/components/navbar"
@@ -117,10 +117,17 @@ function FunctionPageClient({ func }: { func: any }) {
     // Extract color value for ring (remove 'text-' prefix)
     const ringColor = func.color_text?.replace('text-', '') || 'neutral-500'
 
+    // Extract actual color value for the dots
+    const dotColor = func.color_text?.replace('text-', '') || 'neutral-500'
+    const dotColorClass = `bg-${dotColor}`
+
+    // Create ring class by replacing text- with ring-
+    const ringColorClass = `ring-${ringColor}`
+
     return (
         <div className="min-h-screen bg-black">
             <Navbar />
-            <div className="container mx-auto px-4 py-8 pt-24">
+            <div className="max-w-6xl mx-auto px-4 py-8 pt-24">
                 <div className="mb-8">
                     <Link href="/">
                         <Button variant="ghost" className="text-neutral-400 hover:text-white hover:bg-neutral-900 mb-4 rounded-full text-sm font-medium px-4 py-1.5 h-auto">
@@ -130,7 +137,7 @@ function FunctionPageClient({ func }: { func: any }) {
                     </Link>
 
                     <div className="flex items-center gap-4 mb-4">
-                        <div className={`p-3 rounded-lg ${colorBg} ${colorText} ${colorBorder} border`}>
+                        <div className={`p-4 rounded-full ${colorBg} ${colorText}`}>
                             <Icon className="h-8 w-8" />
                         </div>
                         <div>
@@ -146,8 +153,67 @@ function FunctionPageClient({ func }: { func: any }) {
 
                 {/* Categories and Skills */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full items-start">
-                    {/* Left - shows selected category preview */}
-                    <div className="space-y-4">
+                    {/* Mobile: Card Carousel */}
+                    <div className="block md:hidden space-y-4">
+                        {/* Navigation */}
+                        <div className="flex items-center justify-between">
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                onClick={() => setSelectedSection(prev => prev > 0 ? prev - 1 : (func.skills?.length - 1) || 0)}
+                                className="bg-neutral-900 border-neutral-700 hover:bg-neutral-800"
+                            >
+                                <ChevronLeft className="h-4 w-4 text-neutral-400" />
+                            </Button>
+
+                            <div className="text-center">
+                                <p className="text-white font-medium">{func.skills?.[selectedSection]?.category || 'Brak kategorii'}</p>
+                                <p className="text-neutral-400 text-sm">
+                                    {selectedSection + 1} z {func.skills?.length || 0} ({Array.isArray(func.skills?.[selectedSection]?.items) ? func.skills[selectedSection].items.length : 0} umiejętności)
+                                </p>
+                            </div>
+
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                onClick={() => setSelectedSection(prev => prev < (func.skills?.length - 1) || 0 ? prev + 1 : 0)}
+                                className="bg-neutral-900 border-neutral-700 hover:bg-neutral-800"
+                            >
+                                <ChevronRight className="h-4 w-4 text-neutral-400" />
+                            </Button>
+                        </div>
+
+                        {/* Dots indicator */}
+                        <div className="flex justify-center gap-2">
+                            {(func.skills || []).map((_: SkillCategory, index: number) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setSelectedSection(index)}
+                                    className={`w-2 h-2 rounded-full transition-colors ${index === selectedSection ? dotColorClass : 'bg-neutral-600'
+                                        }`}
+                                />
+                            ))}
+                        </div>
+
+                        {/* Current card */}
+                        {func.skills && func.skills[selectedSection] && (
+                            <Card className="bg-neutral-950 border-neutral-800">
+                                <CardContent className="p-7">
+                                    <div className="space-y-3">
+                                        {(func.skills[selectedSection].items || []).map((skill: string, idx: number) => (
+                                            <div key={idx} className="flex items-center gap-3 text-neutral-300 py-1.5">
+                                                <div className={`w-2 h-2 rounded-full ${dotColorClass} flex-shrink-0`} />
+                                                <span>{skill}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        )}
+                    </div>
+
+                    {/* Desktop: Original 2-column layout */}
+                    <div className="hidden md:block space-y-4">
                         {func.skills && func.skills[selectedSection] && (
                             <Card className="bg-neutral-950 border-neutral-800">
                                 <CardHeader className="px-7 py-7">
@@ -164,7 +230,7 @@ function FunctionPageClient({ func }: { func: any }) {
                                     <div className="space-y-3 pl-0">
                                         {(func.skills[selectedSection].items || []).map((skill: string, idx: number) => (
                                             <div key={idx} className="flex items-center gap-3 text-neutral-300 py-1.5">
-                                                <div className={`w-2 h-2 rounded-full ${colorText} flex-shrink-0`} />
+                                                <div className={`w-2 h-2 rounded-full ${dotColorClass} flex-shrink-0`} />
                                                 <span>{skill}</span>
                                             </div>
                                         ))}
@@ -174,13 +240,12 @@ function FunctionPageClient({ func }: { func: any }) {
                         )}
                     </div>
 
-                    {/* Right - list all categories with selection */}
-                    <div className="flex flex-col gap-4 w-full h-full">
+                    {/* Desktop: Right column (hidden on mobile) */}
+                    <div className="hidden md:flex flex-col gap-4 w-full h-full">
                         {(func.skills || []).map((group: SkillCategory, index: number) => (
                             <Card
                                 key={index}
-                                className={`bg-neutral-950 border-neutral-800 hover:bg-neutral-900 transition-colors duration-300 cursor-pointer ${index === selectedSection ? `ring-2 ring-${ringColor} ring-offset-2 ring-offset-black` : ""
-                                    }`}
+                                className={`bg-neutral-950 border-neutral-800 hover:bg-neutral-900 transition-colors duration-300 cursor-pointer ${index === selectedSection ? `ring-2 ${ringColorClass} ring-offset-2 ring-offset-black` : ""}`}
                             >
                                 <CardHeader
                                     className="px-7 py-7 h-full flex items-center justify-center"
@@ -191,7 +256,7 @@ function FunctionPageClient({ func }: { func: any }) {
                                             <ChevronRight className="h-5 w-5 text-neutral-400" />
                                             <CardTitle className="text-xl text-white">{group.category}</CardTitle>
                                         </div>
-                                        <Badge variant="secondary" className="hidden md:flex text-neutral-300 bg-neutral-900 border-neutral-800">
+                                        <Badge variant="secondary" className="text-neutral-300 bg-neutral-900 border-neutral-800">
                                             {Array.isArray(group.items) ? group.items.length : 0} umiejętności
                                         </Badge>
                                     </div>

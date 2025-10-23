@@ -12,8 +12,8 @@ const config: Config = {
 	],
 	safelist: [
 		{
-			// allow dynamic color classes from DB, e.g. bg-orange-500/10, text-blue-500, border-neutral-800
-			pattern: /(bg|text|border)-(neutral|red|orange|yellow|green|blue|purple|pink)-(50|100|200|300|400|500|600|700|800|900)(\/10|\/20|\/30|\/40|\/50)?/,
+			// allow dynamic color classes from DB, e.g. bg-orange-500/10, text-blue-500, border-neutral-800, ring-orange-500
+			pattern: /(bg|text|border|ring)-(neutral|red|orange|yellow|green|blue|purple|pink)-(50|100|200|300|400|500|600|700|800|900)(\/10|\/20|\/30|\/40|\/50)?/,
 		},
 	],
 	theme: {
