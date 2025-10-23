@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
@@ -44,8 +45,8 @@ export default function Navbar() {
       <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-6xl mx-auto px-4">
         <nav className="flex items-center justify-between p-3 text-white bg-black/30 backdrop-blur-lg rounded-full border border-white/10 shadow-lg">
           <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-2 ml-1.5" onClick={() => setIsMenuOpen(false)}>
-              <img src="/croix-agse.png" alt="Logo Skautów Europy" className="h-7 w-7" />
+            <Link href="/" className="flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
+              <Image src="/croix-agse.png" alt="Logo Skautów Europy" width={28} height={28} className="h-7 w-7" />
               <span className="text-lg font-medium hidden sm:inline-block">Pomocnik Skauta</span>
             </Link>
           </div>
@@ -78,7 +79,7 @@ export default function Navbar() {
           </div>
 
           {/* Hamburger Menu for Mobile */}
-          <div className="xl:hidden flex items-center">
+          <div className="xl:hidden flex items-center size-[1.75rem]">
             <Button
               variant="ghost"
               size="icon"

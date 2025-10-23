@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/navbar"
 import Link from "next/link"
+import Image from "next/image"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -68,7 +69,7 @@ export default function HomePage() {
       <div className="min-h-screen bg-black flex items-center justify-center" suppressHydrationWarning={true}>
         <div className="max-w-md w-full px-4" suppressHydrationWarning={true}>
           <div className="text-center mb-6" suppressHydrationWarning={true}>
-            <img src="/croix-agse.png" alt="Logo Skautów Europy" className="h-16 w-16 mx-auto mb-4" />
+            <Image src="/croix-agse.png" alt="Logo Skautów Europy" width={64} height={64} className="h-16 w-16 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-white mb-2">Pomocnik Skauta</h2>
             <p className="text-neutral-400">Ładowanie funkcji...</p>
           </div>
@@ -92,32 +93,50 @@ export default function HomePage() {
       <div className="max-w-6xl mx-auto px-4">
 
         {/* Section 1: Welcome/Hero section */}
-        <div className="flex min-h-screen items-center justify-center text-center">
-          <div className="w-full">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <img src="/croix-agse.png" alt="Logo Skautów Europy" className="h-12 w-12" />
-              <h1 className="text-4xl font-bold text-white">
-                Pomocnik Skauta
-              </h1>
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Text Content */}
+            <div className="text-center lg:text-left">
+              <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
+                <Image src="/croix-agse.png" alt="Logo Skautów Europy" width={32} height={32} className="h-8 w-8" />
+                <h1 className="text-2xl text-neutral-400">
+                  Pomocnik Skauta
+                </h1>
+              </div>
+              <h2 className="text-6xl font-bold text-white mb-4">
+                Zostań mistrzem<br />
+                w każdej funkcji.
+              </h2>
+              <p className="text-xl text-neutral-400 max-w-2xl lg:max-w-none mb-8">
+                Wybierz funkcję, aby poznać wymagania i umiejętności potrzebne do jej pełnienia w zastępie
+              </p>
             </div>
-            <p className="text-xl text-neutral-400 max-w-2xl mx-auto mb-8">
-              Wybierz funkcję, aby poznać wymagania i umiejętności potrzebne do jej pełnienia w zastępie
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              {functions.map((func) => {
-                const IconComponent = getIconComponent(func.icon || undefined)
-                const colorBackground = func.color_background || "bg-neutral-800"
-                const colorText = func.color_text || "text-neutral-300"
-                const colorBorder = func.color_border || "border-neutral-700"
-                return (
-                  <Link key={func.id} href={`/${func.id}`}>
-                    <Button variant="outline" className={`${colorBackground} ${colorBorder} hover:bg-neutral-800 text-white rounded-full text-sm font-medium px-4 py-1.5 h-auto`}>
-                      <IconComponent className={`h-5 w-5 mr-2 ${colorText}`} />
-                      {func.name}
-                    </Button>
-                  </Link>
-                )
-              })}
+
+            {/* Right Column - Function Buttons */}
+            <div className="hidden md:flex justify-center lg:justify-end">
+              <div className="flex flex-wrap justify-center gap-6 max-w-sm">
+                {functions.map((func) => {
+                  const IconComponent = getIconComponent(func.icon || undefined)
+                  const colorBackground = func.color_background || "bg-neutral-800"
+                  const colorText = func.color_text || "text-neutral-300"
+                  return (
+                    <Link key={func.id} href={`/${func.id}`}>
+                      <div className="relative group">
+                        <div 
+                          className={`p-4 rounded-full ${colorBackground} hover:opacity-80 transition-opacity cursor-pointer`}
+                          aria-label={func.name}
+                        >
+                          <IconComponent className={`h-8 w-8 ${colorText}`} />
+                        </div>
+                        {/* Custom Tooltip */}
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 bg-black/90 backdrop-blur-lg border border-white/10 rounded-full text-white text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                          {func.name}
+                        </div>
+                      </div>
+                    </Link>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </div>
