@@ -26,7 +26,7 @@ function getPool(): Pool {
             idleTimeoutMillis: 30_000,
             connectionTimeoutMillis: 10_000,
         })
-        ;(global as any).pgPool = globalPool
+            ; (global as any).pgPool = globalPool
     }
     return globalPool
 }

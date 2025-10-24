@@ -36,7 +36,7 @@ export function validateDatabaseEnv(): DatabaseConfig {
                 database: 'dummy',
             }
         }
-        
+
         throw new Error(
             `❌ Missing required environment variables: ${missing.join(', ')}\n` +
             `Please check your .env file and ensure all database variables are set.`
