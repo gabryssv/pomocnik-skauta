@@ -58,3 +58,19 @@ The application requires the following environment variables:
 | `DATABASE_NAME` | Database name | ✅ Yes |
 
 **Note:** The application will not start if any required environment variables are missing. You'll get a clear error message indicating which variables need to be set.
+
+## Deployment on Vercel
+
+To deploy this application on Vercel:
+
+1. **Import your GitHub repository** to Vercel
+2. **Add environment variables** in Vercel dashboard:
+   - Go to Project Settings → Environment Variables
+   - Add all required database variables:
+     - `DATABASE_HOST`
+     - `DATABASE_USER` 
+     - `DATABASE_PASSWORD`
+     - `DATABASE_NAME`
+3. **Deploy** - Vercel will automatically build and deploy your app
+
+**Important:** Make sure all environment variables are set before deployment, otherwise the build will fail with a "Missing required environment variables" error.

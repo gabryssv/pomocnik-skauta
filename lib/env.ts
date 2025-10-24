@@ -12,7 +12,7 @@ export interface DatabaseConfig {
 
 /**
  * Waliduje czy wszystkie wymagane zmienne środowiskowe są ustawione
- * @throws Error jeśli brakuje którejś zmiennej
+ * @throws Error jeśli brakuje którejś zmiennej i nie jesteśmy w trybie build
  * @returns Obiekt z walidowanymi zmiennymi
  */
 export function validateDatabaseEnv(): DatabaseConfig {
@@ -26,6 +26,17 @@ export function validateDatabaseEnv(): DatabaseConfig {
     const missing = requiredEnvVars.filter(envVar => !process.env[envVar])
 
     if (missing.length > 0) {
+        // W trybie build-time, nie wymagamy zmiennych środowiskowych
+        if (process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE === 'phase-production-build') {
+            // Zwróć dummy config dla build-time
+            return {
+                host: 'localhost',
+                user: 'dummy',
+                password: 'dummy',
+                database: 'dummy',
+            }
+        }
+        
         throw new Error(
             `❌ Missing required environment variables: ${missing.join(', ')}\n` +
             `Please check your .env file and ensure all database variables are set.`
