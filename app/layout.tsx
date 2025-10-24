@@ -19,7 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pl">
-      <body className={`${GeistSans.className}`}>{children}</body>
+      <body className={`${GeistSans.className} bg-black min-h-screen`}>
+        {children}
+      </body>
     </html>
   )
 }

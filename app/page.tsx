@@ -1,8 +1,9 @@
 "use client"
 
-import Navbar from "@/components/navbar"
 import Link from "next/link"
 import Image from "next/image"
+import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -122,7 +123,7 @@ export default function HomePage() {
                   return (
                     <Link key={func.id} href={`/${func.id}`}>
                       <div className="relative group">
-                        <div 
+                        <div
                           className={`p-4 rounded-full ${colorBackground} hover:opacity-80 transition-opacity cursor-pointer`}
                           aria-label={func.name}
                         >
@@ -176,12 +177,9 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Section 3: Footer */}
-        <div className="text-center py-16">
-          <p className="text-neutral-500 text-sm">Wykonanie: <ExternalLink href="https://gabryssv.tech">Gabriel Kossakowski</ExternalLink> - Zastępowy Zastępu WILK - <ExternalLink href="https://www.facebook.com/1grybowskafse">1. DG</ExternalLink></p>
-        </div>
-
       </div>
+
+      <Footer />
     </div>
   )
 }

@@ -4,8 +4,8 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, ChevronRight, ChevronLeft } from "lucide-react"
 import { useState, useEffect, use } from "react"
-
 import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -57,8 +57,8 @@ export default function FunctionPage({ params }: { params: Promise<{ functionId:
     }, [resolvedParams.functionId])
 
     if (loading) {
-        // Get loading icon - try to match the function or use default
-        const LoadingIcon = resolvedParams.functionId ? getIconComponent(getIconNameFromId(resolvedParams.functionId)) : getIconComponent()
+        // Get loading icon - use default
+        const LoadingIcon = getIconComponent()
 
         return (
             <div className="min-h-screen bg-black flex items-center justify-center">
@@ -92,11 +92,13 @@ export default function FunctionPage({ params }: { params: Promise<{ functionId:
 
 // Helper function to map function IDs to icon names
 function getIconNameFromId(functionId: string): string | undefined {
-    const iconMap: Record<string, string> = {
-        pionier: 'hammer',
+    const iconMap: { [key: string]: string } = {
+        przewodnik: 'compass',
         sygnalista: 'radio',
-        topograf: 'compass',
-        wodzirej: 'theater',
+        kronikarz: 'book-open',
+        zastępowy: 'users',
+        skarbnik: 'coins',
+        sprzątacz: 'trash-2',
         kucharz: 'chef-hat',
         sanitariusz: 'heart',
         liturgista: 'latin-cross'
@@ -275,6 +277,8 @@ function FunctionPageClient({ func }: { func: any }) {
                     </Link>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }
+

@@ -33,6 +33,8 @@ export default function Navbar() {
     }
   }
 
+
+
   const navLinks = [
     { href: "/", label: "Strona główna" },
     { href: "#", label: "Funkcje", onClick: handleFunctionsClick },

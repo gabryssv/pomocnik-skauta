@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
 
 export default function WBudowie() {
   return (
@@ -17,6 +18,7 @@ export default function WBudowie() {
           <a href="/" className="bg-white text-black hover:bg-neutral-200 rounded-full text-sm font-medium px-4 py-1.5 inline-block">Strona główna</a>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
