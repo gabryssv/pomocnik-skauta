@@ -3,7 +3,6 @@
 import Link from "next/link"
 import Image from "next/image"
 import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -13,6 +12,7 @@ import { Progress } from "@/components/ui/progress-loading"
 import { useState, useEffect } from "react"
 import { getAllFunctions, countSkills, type FunctionRecord } from "../lib/functions"
 import { getIconComponent } from "../lib/icons"
+import Footer from "@/components/footer"
 
 export default function HomePage() {
   const [functions, setFunctions] = useState<FunctionRecord[]>([])
@@ -22,7 +22,7 @@ export default function HomePage() {
   useEffect(() => {
     async function loadFunctions() {
       try {
-        // Simulate realistic loading progress
+        // Symulacja realistycznego ładowania z progress barem
         const progressInterval = setInterval(() => {
           setLoadingProgress(prev => {
             if (prev >= 90) return prev
@@ -32,7 +32,7 @@ export default function HomePage() {
 
         const data = await getAllFunctions()
 
-        // Complete loading
+        // Zakończ ładowanie
         setLoadingProgress(100)
         setTimeout(() => {
           setFunctions(data)
@@ -67,20 +67,21 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center" suppressHydrationWarning={true}>
-        <div className="max-w-md w-full px-4" suppressHydrationWarning={true}>
-          <div className="text-center mb-6" suppressHydrationWarning={true}>
-            <Image src="/croix-agse.png" alt="Logo Skautów Europy" width={64} height={64} className="h-16 w-16 mx-auto mb-4" />
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="max-w-md w-full px-4">
+          <div className="bg-neutral-950 rounded-3xl p-8 text-center">
+            <Image src="/croix-agse.png" alt="Logo Skautów Europy" width={64} height={64} className="h-16 w-16 mx-auto mb-6" />
             <h2 className="text-2xl font-bold text-white mb-2">Pomocnik Skauta</h2>
-            <p className="text-neutral-400">Ładowanie funkcji...</p>
+            <p className="text-neutral-400 mb-6">Ładowanie funkcji...</p>
+            <div className="w-full max-w-sm mx-auto">
+              <Progress
+                value={loadingProgress}
+                size="md"
+                color="success"
+                showValueLabel={true}
+              />
+            </div>
           </div>
-          <Progress
-            value={loadingProgress}
-            color="success"
-            showValueLabel={true}
-            size="md"
-            className="max-w-md"
-          />
         </div>
       </div>
     )

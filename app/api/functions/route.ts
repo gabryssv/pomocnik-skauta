@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '../../../lib/db'
 
+// 🚀 Cache response for 1 hour (3600 seconds)
+export const revalidate = 3600
+
 export async function GET() {
     try {
         const { rows } = await db.query(
@@ -20,7 +23,12 @@ export async function GET() {
             skills: row.skills ?? null,
         }))
 
-        return NextResponse.json(functions)
+        const response = NextResponse.json(functions)
+
+        // 🚀 Add cache headers for better performance
+        response.headers.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
+
+        return response
     } catch (e: any) {
         if (e && e.code === '42P01') {
             return NextResponse.json([])

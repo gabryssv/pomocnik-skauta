@@ -40,17 +40,3 @@ export function validateDatabaseEnv(): DatabaseConfig {
         database: process.env.DATABASE_NAME!,
     }
 }
-
-/**
- * Sprawdza czy aplikacja działa w środowisku development
- */
-export function isDevelopment(): boolean {
-    return process.env.NODE_ENV === 'development'
-}
-
-/**
- * Sprawdza czy aplikacja działa w środowisku production
- */
-export function isProduction(): boolean {
-    return process.env.NODE_ENV === 'production'
-}

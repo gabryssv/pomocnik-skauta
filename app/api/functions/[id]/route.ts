@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '../../../../lib/db'
 
+// 🚀 Cache individual function data for 1 hour
+export const revalidate = 3600
+
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         // W Next.js 16 params jest Promise i musi być await-owany
@@ -27,7 +30,12 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
             skills: rows[0].skills ?? null,
         }
 
-        return NextResponse.json(func)
+        const response = NextResponse.json(func)
+
+        // 🚀 Add cache headers
+        response.headers.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
+
+        return response
     } catch (e: any) {
         if (e && e.code === '42P01') {
             return NextResponse.json({ error: 'Function not found' }, { status: 404 })

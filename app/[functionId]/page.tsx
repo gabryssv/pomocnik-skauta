@@ -5,7 +5,6 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, ChevronRight, ChevronLeft } from "lucide-react"
 import { useState, useEffect, use } from "react"
 import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -13,6 +12,7 @@ import { Progress } from "@/components/ui/progress-loading"
 import { getFunctionById, countSkills } from "../../lib/functions"
 import { getIconComponent } from "../../lib/icons"
 import type { SkillCategory } from "../../lib/functions"
+import Footer from "@/components/footer"
 
 export default function FunctionPage({ params }: { params: Promise<{ functionId: string }> }) {
     const [func, setFunc] = useState<any>(null)
@@ -23,11 +23,11 @@ export default function FunctionPage({ params }: { params: Promise<{ functionId:
     useEffect(() => {
         async function loadFunction() {
             try {
-                // Realistic loading progress
+                // Symulacja realistycznego ładowania z progress barem
                 const progressInterval = setInterval(() => {
                     setLoadingProgress(prev => {
                         if (prev >= 85) return prev
-                        return prev + Math.random() * 12
+                        return prev + Math.random() * 10
                     })
                 }, 80)
 
@@ -40,7 +40,7 @@ export default function FunctionPage({ params }: { params: Promise<{ functionId:
                     return
                 }
 
-                // Complete loading
+                // Zakończ ładowanie
                 setLoadingProgress(100)
                 setTimeout(() => {
                     setFunc(functionData)
@@ -57,26 +57,27 @@ export default function FunctionPage({ params }: { params: Promise<{ functionId:
     }, [resolvedParams.functionId])
 
     if (loading) {
-        // Get loading icon - use default
-        const LoadingIcon = getIconComponent()
+        // Pobierz ikonę na podstawie ID funkcji
+        const IconComponent = getIconComponent(getIconNameFromId(resolvedParams.functionId))
 
         return (
             <div className="min-h-screen bg-black flex items-center justify-center">
                 <div className="max-w-md w-full px-4">
-                    <div className="text-center mb-6">
-                        <div className="w-16 h-16 bg-neutral-800 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                            <LoadingIcon className="w-8 h-8 text-neutral-400 animate-pulse" />
+                    <div className="bg-neutral-950 rounded-3xl p-8 text-center">
+                        <div className="p-4 rounded-full bg-neutral-800 inline-flex mb-6">
+                            <IconComponent className="h-12 w-12 text-white" />
                         </div>
-                        <h2 className="text-2xl font-bold text-white mb-2">Ładowanie funkcji</h2>
-                        <p className="text-neutral-400">Pobieranie szczegółów...</p>
+                        <h2 className="text-2xl font-bold text-white mb-2">Ładowanie funkcji...</h2>
+                        <p className="text-neutral-400 mb-6">Przygotowywanie zawartości</p>
+                        <div className="w-full max-w-sm mx-auto">
+                            <Progress
+                                value={loadingProgress}
+                                size="md"
+                                color="success"
+                                showValueLabel={true}
+                            />
+                        </div>
                     </div>
-                    <Progress
-                        value={loadingProgress}
-                        color="success"
-                        showValueLabel={true}
-                        size="md"
-                        className="max-w-md"
-                    />
                 </div>
             </div>
         )
@@ -129,7 +130,7 @@ function FunctionPageClient({ func }: { func: any }) {
     return (
         <div className="min-h-screen bg-black">
             <Navbar />
-            <div className="max-w-6xl mx-auto px-4 py-8 pt-24">
+            <div className="min-h-screen max-w-6xl mx-auto px-4 py-8 pt-24">
                 <div className="mb-8">
                     <Link href="/">
                         <Button variant="ghost" className="text-neutral-400 hover:text-white hover:bg-neutral-900 mb-4 rounded-full text-sm font-medium px-4 py-1.5 h-auto">
@@ -277,6 +278,7 @@ function FunctionPageClient({ func }: { func: any }) {
                     </Link>
                 </div>
             </div>
+
             <Footer />
         </div>
     )
