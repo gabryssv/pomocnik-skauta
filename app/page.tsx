@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight } from "lucide-react"
-import { ChevronDown } from "lucide-react"
 import { ExternalLink } from "@/components/external-link"
 import { Progress } from "@/components/ui/progress-loading"
 import { useState, useEffect, lazy, Suspense } from "react"
@@ -119,7 +118,7 @@ export default function HomePage() {
 
             {/* Right Column - Function Buttons */}
             <div className="hidden md:flex justify-center lg:justify-end">
-              <div className="flex flex-wrap justify-center gap-6 max-w-sm">
+              <div className="flex flex-wrap justify-center gap-5 max-w-sm">
                 {functions.map((func) => {
                   const IconComponent = getIconComponent(func.icon || undefined)
                   const colorBackground = func.color_background || "bg-neutral-800"
@@ -128,10 +127,10 @@ export default function HomePage() {
                     <Link key={func.id} href={`/${func.id}`}>
                       <div className="relative group">
                         <div
-                          className={`p-4 rounded-full ${colorBackground} hover:opacity-80 transition-opacity cursor-pointer`}
+                          className={`p-5 rounded-full ${colorBackground} hover:opacity-80 transition-opacity cursor-pointer`}
                           aria-label={func.name}
                         >
-                          <IconComponent className={`h-8 w-8 ${colorText}`} />
+                          <IconComponent className={`h-10 w-10 ${colorText}`} />
                         </div>
                         {/* Custom Tooltip */}
                         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 bg-black/90 backdrop-blur-lg border border-white/10 rounded-full text-white text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
@@ -144,31 +143,6 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <button
-            onClick={() => {
-              const functionsSection = document.getElementById('functions-section')
-              if (functionsSection) {
-                const navbarHeight = 90
-                const elementPosition = functionsSection.offsetTop - navbarHeight
-                window.scrollTo({
-                  top: elementPosition,
-                  behavior: 'smooth'
-                })
-              }
-            }}
-            className="flex flex-col items-center text-neutral-400 hover:text-white transition-colors group"
-          >
-            <span className="text-sm mb-2 opacity-70 group-hover:opacity-100 transition-opacity">
-              Zobacz wszystkie funkcje
-            </span>
-            <div className="p-2 rounded-full bg-neutral-900/50 backdrop-blur-sm border border-neutral-700/50 group-hover:bg-neutral-800/80 transition-all">
-              <ChevronDown className="h-5 w-5" />
-            </div>
-          </button>
         </div>
 
         {/* Section 2: Function cards */}
