@@ -7,12 +7,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 import { ExternalLink } from "@/components/external-link"
 import { Progress } from "@/components/ui/progress-loading"
-import { useState, useEffect } from "react"
+import { useState, useEffect, lazy, Suspense } from "react"
 import { getAllFunctions, countSkills, type FunctionRecord } from "../lib/functions"
 import { getIconComponent } from "../lib/icons"
-import Footer from "@/components/footer"
+
+// Lazy load Footer dla lepszej wydajności
+const LazyFooter = lazy(() => import("@/components/footer"))
 
 export default function HomePage() {
   const [functions, setFunctions] = useState<FunctionRecord[]>([])
@@ -88,14 +91,14 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-black select-none" suppressHydrationWarning={true}>
+    <div className="min-h-screen bg-black select-none">
       <Navbar />
 
       {/* Main container with consistent width */}
       <div className="max-w-6xl mx-auto px-4">
 
         {/* Section 1: Welcome/Hero section */}
-        <div className="flex min-h-screen items-center justify-center">
+        <div className="relative flex min-h-screen items-center justify-center">
           <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Text Content */}
             <div className="text-center lg:text-left">
@@ -143,6 +146,31 @@ export default function HomePage() {
           </div>
         </div>
 
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <button
+            onClick={() => {
+              const functionsSection = document.getElementById('functions-section')
+              if (functionsSection) {
+                const navbarHeight = 90
+                const elementPosition = functionsSection.offsetTop - navbarHeight
+                window.scrollTo({
+                  top: elementPosition,
+                  behavior: 'smooth'
+                })
+              }
+            }}
+            className="flex flex-col items-center text-neutral-400 hover:text-white transition-colors group"
+          >
+            <span className="text-sm mb-2 opacity-70 group-hover:opacity-100 transition-opacity">
+              Zobacz wszystkie funkcje
+            </span>
+            <div className="p-2 rounded-full bg-neutral-900/50 backdrop-blur-sm border border-neutral-700/50 group-hover:bg-neutral-800/80 transition-all">
+              <ChevronDown className="h-5 w-5" />
+            </div>
+          </button>
+        </div>
+
         {/* Section 2: Function cards */}
         <div id="functions-section" className="py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
@@ -180,7 +208,9 @@ export default function HomePage() {
 
       </div>
 
-      <Footer />
+      <Suspense fallback={<div className="h-32 bg-neutral-900/50 animate-pulse" />}>
+        <LazyFooter />
+      </Suspense>
     </div>
   )
 }

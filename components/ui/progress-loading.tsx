@@ -24,18 +24,17 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
         }
 
         return (
-            <div className="w-full space-y-2" ref={ref} suppressHydrationWarning={true} {...props}>
+            <div className="w-full space-y-2" ref={ref} {...props}>
                 {showValueLabel && (
-                    <div className="flex justify-between text-sm text-neutral-400" suppressHydrationWarning={true}>
+                    <div className="flex justify-between text-sm text-neutral-400">
                         <span>Ładowanie...</span>
                         <span>{Math.round(Math.min(100, value))}%</span>
                     </div>
                 )}
-                <div className={cn("w-full bg-neutral-800 rounded-full overflow-hidden", sizeClasses[size], className)} suppressHydrationWarning={true}>
+                <div className={cn("w-full bg-neutral-800 rounded-full overflow-hidden", sizeClasses[size], className)}>
                     <div
                         className={cn("h-full transition-all duration-300 ease-out rounded-full", colorClasses[color])}
                         style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
-                        suppressHydrationWarning={true}
                     />
                 </div>
             </div>
