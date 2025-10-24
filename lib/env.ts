@@ -4,10 +4,10 @@
  */
 
 export interface DatabaseConfig {
-  host: string
-  user: string
-  password: string
-  database: string
+    host: string
+    user: string
+    password: string
+    database: string
 }
 
 /**
@@ -16,41 +16,41 @@ export interface DatabaseConfig {
  * @returns Obiekt z walidowanymi zmiennymi
  */
 export function validateDatabaseEnv(): DatabaseConfig {
-  const requiredEnvVars = [
-    'DATABASE_HOST',
-    'DATABASE_USER', 
-    'DATABASE_PASSWORD',
-    'DATABASE_NAME'
-  ] as const
+    const requiredEnvVars = [
+        'DATABASE_HOST',
+        'DATABASE_USER',
+        'DATABASE_PASSWORD',
+        'DATABASE_NAME'
+    ] as const
 
-  const missing = requiredEnvVars.filter(envVar => !process.env[envVar])
-  
-  if (missing.length > 0) {
-    throw new Error(
-      `❌ Missing required environment variables: ${missing.join(', ')}\n` +
-      `Please check your .env file and ensure all database variables are set.`
-    )
-  }
+    const missing = requiredEnvVars.filter(envVar => !process.env[envVar])
 
-  // Teraz TypeScript wie że te zmienne na pewno istnieją
-  return {
-    host: process.env.DATABASE_HOST!,
-    user: process.env.DATABASE_USER!,
-    password: process.env.DATABASE_PASSWORD!,
-    database: process.env.DATABASE_NAME!,
-  }
+    if (missing.length > 0) {
+        throw new Error(
+            `❌ Missing required environment variables: ${missing.join(', ')}\n` +
+            `Please check your .env file and ensure all database variables are set.`
+        )
+    }
+
+    // Teraz TypeScript wie że te zmienne na pewno istnieją
+    return {
+        host: process.env.DATABASE_HOST!,
+        user: process.env.DATABASE_USER!,
+        password: process.env.DATABASE_PASSWORD!,
+        database: process.env.DATABASE_NAME!,
+    }
 }
 
 /**
  * Sprawdza czy aplikacja działa w środowisku development
  */
 export function isDevelopment(): boolean {
-  return process.env.NODE_ENV === 'development'
+    return process.env.NODE_ENV === 'development'
 }
 
 /**
  * Sprawdza czy aplikacja działa w środowisku production
  */
 export function isProduction(): boolean {
-  return process.env.NODE_ENV === 'production'
+    return process.env.NODE_ENV === 'production'
 }
