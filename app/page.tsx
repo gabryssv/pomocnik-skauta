@@ -101,7 +101,7 @@ export default function HomePage() {
           <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Text Content */}
             <div className="text-center lg:text-left">
-              <div className="grid grid-flow-col items-center justify-items-center lg:justify-items-start gap-4 mb-4">
+              <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
                 <Image src="/croix-agse.png" alt="Logo Skautów Europy" width={32} height={32} className="h-8 w-8" />
                 <h1 className="text-2xl text-neutral-400">
                   Pomocnik Skauta
